@@ -4,8 +4,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 
+import createSagaMiddleware from 'redux-saga'
+import mySaga from './saga'
 
 
 /**
@@ -31,12 +33,17 @@ function counter(state = 0, action) {
   }
 }
 
+const sagaMiddleware = createSagaMiddleware()
+
 // Create a Redux store holding the state of your app.
 // Its API is { subscribe, dispatch, getState }.
 let store = createStore(
   counter,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(sagaMiddleware),
 )
+
+sagaMiddleware.run(mySaga)
 
 // You can use subscribe() to update the UI in response to state changes.
 // Normally you'd use a view binding library (e.g. React Redux) rather than subscribe() directly.
