@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 class App extends Component {
   render() {
 
-    const { increment } = this.props;
+    const { increment, decrement, counter } = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -16,8 +16,10 @@ class App extends Component {
         <p className="App-intro">
           Hello
           <br/>
+          {counter}
+          <br/>
           <button onMouseDown={increment}>+</button>
-          <button>-</button>
+          <button onMouseDown={decrement}>-</button>
         </p>
       </div>
     );
@@ -26,7 +28,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    counter: state.counter
+    counter: state 
   }
 }
 
